@@ -1,7 +1,8 @@
 import plotly.graph_objs as go
 
-def plot_mean_price_ca(df):
+def plot_mean_price_ca(df,year):
     # Get the dataframe and create a new one for plotly
+    df = df.loc [df ['anio'].isin(year)]
     df_mean_price = df.groupby("comunidad").mean()["precio"].sort_values(ascending=False)
     # Create a horizontal bar graph
     fig = go.Figure(data=[go.Bar(x=df_mean_price.values,

@@ -3,11 +3,16 @@ import pandas as pd
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.pyplot as plt
 
+
 # this funcion plots a map with the mean prices of the crop
-def map_mean_price_ca(df):
+def map_mean_price_ca(df,year):
 
     # get the mean values of price por autonomous community, this is a pandas series where the index is comunidad
+    # the groupby adds a few blank spaces at the end of the index value, so need to strip, otherway wont merge
+    df = df.loc [df ['anio'].isin(year)]
     series_mean_price = df.groupby ("comunidad").mean (numeric_only=True) ["precio"]
+    series_mean_price.index = series_mean_price.index.str.rstrip ()
+
     # convert the series to a dataframe and reset index to get a new column with the index names = communities
     df_mean_price = pd.DataFrame (series_mean_price).reset_index ()
 
@@ -32,7 +37,7 @@ def map_mean_price_ca(df):
     map_data = map_data.sort_values (by='comunidad').reset_index ()
 
     # merge the geometry dataframe with the prices dataframe
-    merged_data = map_data.merge (df_mean_price,  left_index=True, right_index=True)
+    merged_data = map_data.merge (df_mean_price, on='comunidad', how='inner')
 
     # generate the map
     fig, ax = plt.subplots (figsize=(10,10))
@@ -51,10 +56,14 @@ def map_mean_price_ca(df):
     return fig
 
 
-def map_mean_price_pr(df):
+def map_mean_price_pr(df,year):
 
     # get the mean values of price por autonomous community, this is a pandas series where the index is province
+    # the groupby adds a few blank spaces at the end of the index value, so need to strip, otherway wont merge
+    df = df.loc [df ['anio'].isin(year)]
     series_mean_price = df.groupby ("provincia").mean (numeric_only=True) ["precio"]
+    series_mean_price.index = series_mean_price.index.str.rstrip ()
+
     # convert the series to a dataframe and reset index to get a new column with the index names = communities
     df_mean_price = pd.DataFrame (series_mean_price).reset_index ()
 
@@ -63,7 +72,6 @@ def map_mean_price_pr(df):
     map_data = map_data.loc [:, ['NAME_2', 'geometry']]
     map_data = map_data.rename (columns={'NAME_2': 'provincia'})
     map_data = map_data.loc [~map_data ['provincia'].isin (['Ceuta', 'Melilla'])]
-
     map_data ['provincia'] = map_data ['provincia'].replace (
         {'Álava': 'Araba/Álava',
          'Vizcaya': 'Bizkaia',
@@ -71,13 +79,16 @@ def map_mean_price_pr(df):
          'Guipúzcoa': 'Gipuzkoa',
          'La Rioja': 'Rioja (La)',
          'Las Palmas': 'Palmas (Las)',
-         'A Coruña': 'Coruña (La)'
+         'A Coruña': 'Coruña (A)',
+         'Castellón': 'Castellón/Castelló',
+         'Alicante': 'Alicante/Alacant',
+         'Valencia': 'Valencia/València',
          })
 
     map_data = map_data.sort_values (by='provincia').reset_index ()
 
     # merge the geometry dataframe with the prices dataframe
-    merged_data = map_data.merge (df_mean_price,  left_index=True, right_index=True)
+    merged_data = map_data.merge (df_mean_price, on='provincia', how='inner')
 
     # generate the map
     fig, ax = plt.subplots (figsize=(10,10))
