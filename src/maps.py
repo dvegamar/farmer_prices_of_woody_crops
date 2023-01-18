@@ -5,11 +5,10 @@ import matplotlib.pyplot as plt
 
 
 # this funcion plots a map with the mean prices of the crop
-def map_mean_price_ca(df,year):
+def map_mean_price_ca(df):
 
     # get the mean values of price por autonomous community, this is a pandas series where the index is comunidad
     # the groupby adds a few blank spaces at the end of the index value, so need to strip, otherway wont merge
-    df = df.loc [df ['anio'].isin(year)]
     series_mean_price = df.groupby ("comunidad").mean (numeric_only=True) ["precio"]
     series_mean_price.index = series_mean_price.index.str.rstrip ()
 
@@ -56,11 +55,10 @@ def map_mean_price_ca(df,year):
     return fig
 
 
-def map_mean_price_pr(df,year):
+def map_mean_price_pr(df):
 
     # get the mean values of price por autonomous community, this is a pandas series where the index is province
     # the groupby adds a few blank spaces at the end of the index value, so need to strip, otherway wont merge
-    df = df.loc [df ['anio'].isin(year)]
     series_mean_price = df.groupby ("provincia").mean (numeric_only=True) ["precio"]
     series_mean_price.index = series_mean_price.index.str.rstrip ()
 

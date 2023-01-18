@@ -5,9 +5,8 @@ import pandas as pd
 # but many styles do not work in streamlit, backgrounds work, but font styles dont with set properties, or other sytles
 # so text formatting is nearly impossible
 
-def table_price_pr(df,year):
+def table_price_pr(df):
 
-    df = df.loc [df ['anio'].isin(year)]
     series_mean_price = df.groupby ("provincia").mean () ["precio"].sort_values (ascending=False)
     df_mean_price = pd.DataFrame (series_mean_price).reset_index ().sort_values (by='provincia')
 
