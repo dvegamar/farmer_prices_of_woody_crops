@@ -90,9 +90,9 @@ with col3:
 def insert_data(variables,sentencia):
 
     conexion = psycopg2.connect (
-        user='dvega',
+        user='dvegamar',
         password='dvega123',
-        host='127.0.0.1',
+        host='34.175.248.116',
         port='5432',
         database='olivares')
     cursor = conexion.cursor ()

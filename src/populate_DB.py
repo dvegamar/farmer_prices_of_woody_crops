@@ -1,5 +1,4 @@
 # script to populate the three tables in the database with random values
-import numpy as np
 import psycopg2
 import pandas as pd
 import random

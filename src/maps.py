@@ -3,7 +3,6 @@ import pandas as pd
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.pyplot as plt
 
-
 # this funcion plots a map with the mean prices of the crop
 def map_mean_price_ca(df):
 
