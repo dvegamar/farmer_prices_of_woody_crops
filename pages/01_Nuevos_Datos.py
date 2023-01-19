@@ -89,12 +89,13 @@ with col3:
 
 def insert_data(variables,sentencia):
 
+    service_account = st.secrets ["postgres_olivares"]
     conexion = psycopg2.connect (
-        user='dvegamar',
-        password='dvega123',
-        host='34.175.248.116',
-        port='5432',
-        database='olivares')
+        user=service_account ["username"],
+        password=service_account ["password"],
+        host=service_account ["host"],
+        port=service_account ["port"],
+        database=service_account ["database"])
     cursor = conexion.cursor ()
 
     try:
