@@ -116,7 +116,7 @@ with col8:
     com_auton = st.selectbox('Selecciona la Comunidad Autónoma:', list_com_auton, index=0)
 
     list_provinces = df_mun['Provincia'][df_mun['Autonomía'] == com_auton].unique()
-    province = st.selectbox('Selecciona una Provincia:', list_provinces, index=1)
+    province = st.selectbox('Selecciona una Provincia:', list_provinces)
 
 with col9:
     st.empty ()
